@@ -85,6 +85,7 @@ descriptions, mudras et coûts de chakra.
 <button class="filtre" data-filtre="Foudre">Raiton</button>
 <button class="filtre" data-filtre="Eau">Suiton</button>
 <button class="filtre" data-filtre="Terre">Doton</button>
+<button class="filtre" data-filtre="Sceaux">Sceaux</button>
 </div>
 
 <input id="recherche" type="search"
@@ -97,10 +98,7 @@ placeholder="Rechercher une technique, un mudra ou un élément...">
 
 <script>
 
-// ==========================================
 // TECHNIQUES
-// ==========================================
-
 // Format : nom, catégorie, description, mudras, chakra
 
 const base = [
@@ -199,9 +197,7 @@ const base = [
 
 ];
 
-// ==========================================
 // VARIANTES POUR ATTEINDRE 500 FICHES
-// ==========================================
 
 const elements=[
  ["Feu","Katon"],
@@ -227,29 +223,22 @@ const variantes=[
 let numeroVariante=1;
 
 while(base.length<500){
-
  const i=numeroVariante-1;
-
  const el=elements[i%elements.length];
- const v=variantes[
-   Math.floor(i/elements.length)%variantes.length
- ];
+ const v=variantes[Math.floor(i/elements.length)%variantes.length];
 
  base.push([
-   `Variante fictive ${numeroVariante} : technique ${v[0]} ${el[1]}`,
-   el[0],
-   v[1],
-   "Séquence non établie",
-   30000+((numeroVariante*7919)%970000),
-   true
+  `Variante fictive ${numeroVariante} : technique ${v[0]} ${el[1]}`,
+  el[0],
+  v[1],
+  "Séquence non établie",
+  30000+((numeroVariante*7919)%970000),
+  true
  ]);
-
  numeroVariante++;
 }
 
-// ==========================================
 // AFFICHAGE
-// ==========================================
 
 const nomsElements={
  Feu:"Katon",
@@ -290,17 +279,11 @@ function formater(n){
 }
 
 function afficher(){
-
  const terme=recherche.value.trim().toLocaleLowerCase("fr");
 
  const resultats=techniques.filter(t=>{
-
   const texte=[
-   t.nom,
-   t.categorie,
-   t.description,
-   t.mudras,
-   t.chakra,
+   t.nom,t.categorie,t.description,t.mudras,t.chakra,
    nomsElements[t.categorie]||""
   ].join(" ").toLocaleLowerCase("fr");
 
@@ -322,7 +305,6 @@ function afficher(){
  }
 
  resultats.forEach(t=>{
-
   const carte=document.createElement("article");
   carte.className="technique";
 
@@ -356,9 +338,7 @@ function afficher(){
 
   barre.appendChild(progression);
 
-  carte.append(
-   titre,categorie,description,mudras,chakra,barre
-  );
+  carte.append(titre,categorie,description,mudras,chakra,barre);
 
   if(t.fictive){
    const badge=document.createElement("span");
@@ -368,15 +348,12 @@ function afficher(){
   }
 
   liste.appendChild(carte);
-
  });
 }
 
 recherche.addEventListener("input",afficher);
-
 afficher();
 
 </script>
 </body>
 </html>
-
